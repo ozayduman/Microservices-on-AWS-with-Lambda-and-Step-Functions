@@ -1,0 +1,17 @@
+{
+  "Comment": "Process of booking a hotel and an buying a ticket for a museum",
+  "StartAt": "BookHotel",
+  "States": {
+    "BookHotel": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-1:363098689610:function:BookHotel",
+      "Parameters": {
+        "buyer_id.$": "$.purchase.buyer_id",
+        "start_date.$": "$.hotel.start_date",
+        "end_date.$": "$.hotel.end_date",
+        "near.$": "$.museum.name"
+      },
+      "End": true
+    }
+  }
+}
