@@ -1,0 +1,29 @@
+{
+  "Comment": "Process of book a hotel an buy a ticket for a museum",
+  "StartAt": "BookHotelState",
+  "States": {
+    "BookHotelState": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-1:363098689610:function:BookHotel",
+      "Parameters": {
+        "buyer_id.$": "$.purchase.buyer_id",
+        "start_date.$": "$.hotel.start_date",
+        "end_date.$": "$.hotel.end_date",
+        "near.$": "$.museum.name"
+      },
+      "ResultPath": "$.hotel",
+      "Next": "BookMuseumState"
+    },
+    "BookMuseumState": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-1:363098689610:function:BookMuseum",
+      "Parameters": {
+        "buyer_id.$": "$.purchase.buyer_id",
+        "museum_name.$": "$.museum.name",
+        "when.$": "$.museum.when"
+      },
+      "ResultPath": "$.museum",
+      "End": true
+    }
+  }
+}
